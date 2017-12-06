@@ -1,0 +1,38 @@
+
+
+
+test.exe
+
+TOSComputerNameTest
+- ComputerNameIs
+
+TOSLocalIPTest
+- LocalIPIs
+
+TOSLocalMacAddressTest
+- MacAddressIs
+
+TOSRemoteMacAddressTest
+- MacAddressIs
+
+TOSUserNameTest
+- UserNameIs
+
+TOSCPUSpeedTest
+- ValueIsNotZero
+
+TOSCPUIDTest
+- CPUIDIsNotEmpty
+- HasCPUIDIsTrue
+
+TOSCPUVendorTest
+- ValueIsNotEmpty
+- SerialLenIs12
+- IOsGenuineIntel
+
+TOSDriveSerialTest
+- ValueIsNotEmpty
+- InvalidDriveMustBeZero
+
+Ran 13 tests successfully in 530ms 
+

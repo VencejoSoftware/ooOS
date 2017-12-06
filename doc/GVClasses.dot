@@ -1,0 +1,34 @@
+DiGraph Classes {
+  IOSCPUID -> IInterface
+  IOSCPUID [href="ooOS.CPUID.IOSCPUID.html"]
+  IOSCPUSpeed -> IInterface
+  IOSCPUSpeed [href="ooOS.CPUSpeed.IOSCPUSpeed.html"]
+  IOSDriveSerial -> IInterface
+  IOSDriveSerial [href="ooOS.DriveSerial.IOSDriveSerial.html"]
+  IOSEnvironmentInfo -> IInterface
+  IOSEnvironmentInfo [href="ooOS.Environment.Info.IOSEnvironmentInfo.html"]
+  IOSInfo -> IInterface
+  IOSInfo [href="ooOS.Info.Intf.IOSInfo.html"]
+  TEnvironmentValueList -> TDictionary
+  TEnvironmentValueList [href="ooOS.Environment.Info.TEnvironmentValueList.html"]
+  TOSComputerName -> TInterfacedObject
+  TOSComputerName [href="ooOS.ComputerName.TOSComputerName.html"]
+  TOSCPUID -> TInterfacedObject
+  TOSCPUID [href="ooOS.CPUID.TOSCPUID.html"]
+  TOSCPUSpeed -> TInterfacedObject
+  TOSCPUSpeed [href="ooOS.CPUSpeed.TOSCPUSpeed.html"]
+  TOSCPUVendor -> TInterfacedObject
+  TOSCPUVendor [href="ooOS.CPUVendor.TOSCPUVendor.html"]
+  TOSDriveSerial -> TInterfacedObject
+  TOSDriveSerial [href="ooOS.DriveSerial.TOSDriveSerial.html"]
+  TOSLocalIP -> TInterfacedObject
+  TOSLocalIP [href="ooOS.LocalIP.TOSLocalIP.html"]
+  TOSLocalMacAddress -> TInterfacedObject
+  TOSLocalMacAddress [href="ooOS.LocalMacAddress.TOSLocalMacAddress.html"]
+  TOSRemoteMacAddress -> TInterfacedObject
+  TOSRemoteMacAddress [href="ooOS.RemoteMacAddress.TOSRemoteMacAddress.html"]
+  TOSUserName -> TInterfacedObject
+  TOSUserName [href="ooOS.UserName.TOSUserName.html"]
+  TWinEnvironmentInfo -> TInterfacedObject
+  TWinEnvironmentInfo [href="ooOS.Environment.Info.TWinEnvironmentInfo.html"]
+}

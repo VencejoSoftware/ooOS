@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Delphi CodeCoverage Coverage Report</title>
+<style type="text/css">
+table {border-spacing:0; border-collapse:collapse;}
+table, td, th {border: 1px solid black;}
+td, th {background: white; margin: 0; padding: 2px 0.5em 2px 0.5em}
+td {border-width: 0 1px 0 0;}
+th {border-width: 1px 1px 1px 0;}
+p, h1, h2, h3, th {font-family: verdana,arial,sans-serif; font-size: 10pt;}
+td {font-family: courier,monospace; font-size: 10pt;}
+th {background: #CCCCCC;}
+table.o tr td:nth-child(1) {font-weight: bold;}
+table.o tr td:nth-child(2) {text-align: right;}
+table.o tr td {border-width: 1px;}
+table.s {width: 100%;}
+table.s tr td {padding: 0 0.25em 0 0.25em;}
+table.s tr td:first-child {text-align: right; font-weight: bold;}
+table.s tr.notcovered td {background: #DDDDFF;}
+table.s tr.nocodegen td {background: #FFFFEE;}
+table.s tr.covered td {background: #CCFFCC;}
+table.s tr.covered td:first-child {color: green;}
+table.s {border-width: 1px 0 1px 1px;}
+table.sum tr td {border-width: 1px;}
+table.sum tr th {text-align:right;}
+table.sum tr th:first-child {text-align:center;}
+table.sum tr td {text-align:right;}
+table.sum tr td:first-child {text-align:left;}
+</style>
+</head>
+<body>
+<p>Coverage report for <strong>ooOS.RemoteMacAddress (C:\develop\ooLib\ooOS\code\ooOS.RemoteMacAddress.pas)</strong>.</p>
+<p> Generated at 06/12/2017 16:13:45 by <a href="https://sourceforge.net/projects/delphicodecoverage/" title="Code Coverage for Delphi 5+">DelphiCodeCoverage</a> - an open source tool for Delphi Code Coverage.</p>
+<p> Statistics for C:\develop\ooLib\ooOS\code\ooOS.RemoteMacAddress.pas </p>
+<table  class="o"><tr><td>Number of lines covered</td><td>12</td></tr><tr><td>Number of lines with code gen</td><td>27</td></tr><tr><td>Line coverage</td><td>44%</td></tr></table>
+<br /><br />
+<table  class="s">
+<tr class="nocodegen"><td>1</td><td><pre style="display:inline;">{</pre></td></tr>
+<tr class="nocodegen"><td>2</td><td><pre style="display:inline;"> &nbsp;Copyright (c) 2016, Vencejo Software</pre></td></tr>
+<tr class="nocodegen"><td>3</td><td><pre style="display:inline;"> &nbsp;Distributed under the terms of the Modified BSD License</pre></td></tr>
+<tr class="nocodegen"><td>4</td><td><pre style="display:inline;"> &nbsp;The full license is distributed with this software</pre></td></tr>
+<tr class="nocodegen"><td>5</td><td><pre style="display:inline;">}</pre></td></tr>
+<tr class="nocodegen"><td>6</td><td><pre style="display:inline;">unit ooOS.RemoteMacAddress;</pre></td></tr>
+<tr class="nocodegen"><td>7</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>8</td><td><pre style="display:inline;">interface</pre></td></tr>
+<tr class="nocodegen"><td>9</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>10</td><td><pre style="display:inline;">uses</pre></td></tr>
+<tr class="nocodegen"><td>11</td><td><pre style="display:inline;"> &nbsp;Windows, Winsock,</pre></td></tr>
+<tr class="nocodegen"><td>12</td><td><pre style="display:inline;"> &nbsp;SysUtils,</pre></td></tr>
+<tr class="nocodegen"><td>13</td><td><pre style="display:inline;"> &nbsp;ooOS.Info.Intf;</pre></td></tr>
+<tr class="nocodegen"><td>14</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>15</td><td><pre style="display:inline;">type</pre></td></tr>
+<tr class="nocodegen"><td>16</td><td><pre style="display:inline;"> &nbsp;TOSRemoteMacAddress = class sealed(TInterfacedObject, IOSInfo)</pre></td></tr>
+<tr class="nocodegen"><td>17</td><td><pre style="display:inline;"> &nbsp;strict private</pre></td></tr>
+<tr class="nocodegen"><td>18</td><td><pre style="display:inline;"> &nbsp; &nbsp;_IP: String;</pre></td></tr>
+<tr class="nocodegen"><td>19</td><td><pre style="display:inline;"> &nbsp;private</pre></td></tr>
+<tr class="nocodegen"><td>20</td><td><pre style="display:inline;"> &nbsp; &nbsp;function RemoteMacAddress(const IP: RawByteString): String;</pre></td></tr>
+<tr class="nocodegen"><td>21</td><td><pre style="display:inline;"> &nbsp;public</pre></td></tr>
+<tr class="nocodegen"><td>22</td><td><pre style="display:inline;"> &nbsp; &nbsp;function Value: string;</pre></td></tr>
+<tr class="nocodegen"><td>23</td><td><pre style="display:inline;"> &nbsp; &nbsp;constructor Create(const IP: String);</pre></td></tr>
+<tr class="nocodegen"><td>24</td><td><pre style="display:inline;"> &nbsp; &nbsp;class function New(const IP: String): IOSInfo;</pre></td></tr>
+<tr class="nocodegen"><td>25</td><td><pre style="display:inline;"> &nbsp;end;</pre></td></tr>
+<tr class="nocodegen"><td>26</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>27</td><td><pre style="display:inline;">implementation</pre></td></tr>
+<tr class="nocodegen"><td>28</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>29</td><td><pre style="display:inline;">function SendArp(DestIP, SrcIP: ULONG; pMacAddr: Pointer; PhyAddrLen: Pointer): DWord; StdCall;</pre></td></tr>
+<tr class="notcovered"><td>30</td><td><pre style="display:inline;"> &nbsp;external &apos;iphlpapi.dll&apos; name &apos;SendARP&apos;;</pre></td></tr>
+<tr class="nocodegen"><td>31</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>32</td><td><pre style="display:inline;">function TOSRemoteMacAddress.RemoteMacAddress(const IP: RawByteString): String;</pre></td></tr>
+<tr class="nocodegen"><td>33</td><td><pre style="display:inline;">const</pre></td></tr>
+<tr class="nocodegen"><td>34</td><td><pre style="display:inline;"> &nbsp;HexChars: array [0 .. 15] of AnsiChar = &apos;0123456789ABCDEF&apos;;</pre></td></tr>
+<tr class="nocodegen"><td>35</td><td><pre style="display:inline;">var</pre></td></tr>
+<tr class="nocodegen"><td>36</td><td><pre style="display:inline;"> &nbsp;dwRemoteIP: DWord;</pre></td></tr>
+<tr class="nocodegen"><td>37</td><td><pre style="display:inline;"> &nbsp;PhyAddrLen: Longword;</pre></td></tr>
+<tr class="nocodegen"><td>38</td><td><pre style="display:inline;"> &nbsp;pMacAddr: array [0 .. 7] of byte;</pre></td></tr>
+<tr class="nocodegen"><td>39</td><td><pre style="display:inline;"> &nbsp;I: integer;</pre></td></tr>
+<tr class="nocodegen"><td>40</td><td><pre style="display:inline;"> &nbsp;P: PAnsiChar;</pre></td></tr>
+<tr class="nocodegen"><td>41</td><td><pre style="display:inline;"> &nbsp;Return: RawByteString;</pre></td></tr>
+<tr class="covered"><td>42</td><td><pre style="display:inline;">begin</pre></td></tr>
+<tr class="covered"><td>43</td><td><pre style="display:inline;"> &nbsp;Result := EmptyStr;</pre></td></tr>
+<tr class="covered"><td>44</td><td><pre style="display:inline;"> &nbsp;Return := &apos;&apos;;</pre></td></tr>
+<tr class="covered"><td>45</td><td><pre style="display:inline;"> &nbsp;dwRemoteIP := inet_addr(Pointer(IP));</pre></td></tr>
+<tr class="notcovered"><td>46</td><td><pre style="display:inline;"> &nbsp;if dwRemoteIP = 0 then</pre></td></tr>
+<tr class="nocodegen"><td>47</td><td><pre style="display:inline;"> &nbsp; &nbsp;Exit;</pre></td></tr>
+<tr class="notcovered"><td>48</td><td><pre style="display:inline;"> &nbsp;PhyAddrLen := 8;</pre></td></tr>
+<tr class="notcovered"><td>49</td><td><pre style="display:inline;"> &nbsp;if SendArp(dwRemoteIP, 0, @pMacAddr, @PhyAddrLen) = NO_ERROR then</pre></td></tr>
+<tr class="nocodegen"><td>50</td><td><pre style="display:inline;"> &nbsp;begin</pre></td></tr>
+<tr class="notcovered"><td>51</td><td><pre style="display:inline;"> &nbsp; &nbsp;if PhyAddrLen = 6 then</pre></td></tr>
+<tr class="nocodegen"><td>52</td><td><pre style="display:inline;"> &nbsp; &nbsp;begin</pre></td></tr>
+<tr class="notcovered"><td>53</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp;SetLength(Return, 12);</pre></td></tr>
+<tr class="notcovered"><td>54</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp;P := Pointer(Return);</pre></td></tr>
+<tr class="notcovered"><td>55</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp;for I := 0 to 5 do</pre></td></tr>
+<tr class="nocodegen"><td>56</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp;begin</pre></td></tr>
+<tr class="notcovered"><td>57</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp; &nbsp;P[0] := HexChars[pMacAddr[I] shr 4];</pre></td></tr>
+<tr class="notcovered"><td>58</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp; &nbsp;P[1] := HexChars[pMacAddr[I] and $F];</pre></td></tr>
+<tr class="notcovered"><td>59</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp; &nbsp;inc(P, 2);</pre></td></tr>
+<tr class="notcovered"><td>60</td><td><pre style="display:inline;"> &nbsp; &nbsp; &nbsp;end;</pre></td></tr>
+<tr class="nocodegen"><td>61</td><td><pre style="display:inline;"> &nbsp; &nbsp;end;</pre></td></tr>
+<tr class="notcovered"><td>62</td><td><pre style="display:inline;"> &nbsp; &nbsp;Result := String(Return);</pre></td></tr>
+<tr class="nocodegen"><td>63</td><td><pre style="display:inline;"> &nbsp;end;</pre></td></tr>
+<tr class="notcovered"><td>64</td><td><pre style="display:inline;">end;</pre></td></tr>
+<tr class="nocodegen"><td>65</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>66</td><td><pre style="display:inline;">function TOSRemoteMacAddress.Value: string;</pre></td></tr>
+<tr class="covered"><td>67</td><td><pre style="display:inline;">begin</pre></td></tr>
+<tr class="covered"><td>68</td><td><pre style="display:inline;"> &nbsp;Result := RemoteMacAddress(RawByteString(_IP));</pre></td></tr>
+<tr class="notcovered"><td>69</td><td><pre style="display:inline;">end;</pre></td></tr>
+<tr class="nocodegen"><td>70</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>71</td><td><pre style="display:inline;">constructor TOSRemoteMacAddress.Create(const IP: String);</pre></td></tr>
+<tr class="covered"><td>72</td><td><pre style="display:inline;">begin</pre></td></tr>
+<tr class="covered"><td>73</td><td><pre style="display:inline;"> &nbsp;_IP := IP;</pre></td></tr>
+<tr class="covered"><td>74</td><td><pre style="display:inline;">end;</pre></td></tr>
+<tr class="nocodegen"><td>75</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>76</td><td><pre style="display:inline;">class function TOSRemoteMacAddress.New(const IP: String): IOSInfo;</pre></td></tr>
+<tr class="covered"><td>77</td><td><pre style="display:inline;">begin</pre></td></tr>
+<tr class="covered"><td>78</td><td><pre style="display:inline;"> &nbsp;Result := TOSRemoteMacAddress.Create(IP);</pre></td></tr>
+<tr class="covered"><td>79</td><td><pre style="display:inline;">end;</pre></td></tr>
+<tr class="nocodegen"><td>80</td><td><pre style="display:inline;"></pre></td></tr>
+<tr class="nocodegen"><td>81</td><td><pre style="display:inline;">end.</pre></td></tr>
+</table>
+</body>
+</html>

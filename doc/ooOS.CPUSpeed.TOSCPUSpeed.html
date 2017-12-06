@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ooLib: ooOS.CPUSpeed: Clase TOSCPUSpeed</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-15">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ooLib</h2><p><a href="introduction.html" class="navigation">Introducción</a></p><p><a href="AllUnits.html" class="navigation">Unidades</a></p><p><a href="ClassHierarchy.html" class="navigation">Jerarquía de clases</a></p><p><a href="AllClasses.html" class="navigation">Clases, interfaces y objetos</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variables</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funciones y procedimientos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><a href="GVUses.svg" class="navigation">Gráfico de las dependencias de unidades</a></p><p><a href="GVClasses.svg" class="navigation">Gráfico de la jerarquía de clases</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="TOSCPUSpeed"></a><h1 class="cio">Clase TOSCPUSpeed</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descripción</a></td><td><a class="section" href="#PasDoc-Hierarchy">Jerarquía</a></td><td><a class="section" href="#PasDoc-InternalTypes">Internal Types</a></td><td>Campos</td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Propiedades</td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unidad</h2>
+<p class="unitlink">
+<a  href="ooOS.CPUSpeed.html">ooOS.CPUSpeed</a></p>
+<h2 class="declaration">Declaración</h2>
+<p class="declaration">
+<code>type TOSCPUSpeed = class sealed(TInterfacedObject, <a class="normal" href="ooOS.CPUSpeed.IOSCPUSpeed.html">IOSCPUSpeed</a>)</code></p>
+<h2 class="description">Descripción</h2>
+<p>
+Implementation of <a class="normal" href="ooOS.CPUSpeed.IOSCPUSpeed.html">IOSCPUSpeed</a></p>
+<p>
+ Object to calculate the CPU speed   </p>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Jerarquía</h2>
+<ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
+<li class="thisitem">TOSCPUSpeed</li></ul><h2 class="overview">Resumen</h2>
+<a name="PasDoc-InternalTypes"></a><h3 class="summary">Internal Types</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a  href="ooOS.CPUSpeed.TOSCPUSpeed.html#TCycleCount">TCycleCount</a></b> = DWord ;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ooOS.CPUSpeed.TOSCPUSpeed.html#CPUClockCycleCount">CPUClockCycleCount</a></b>: <a  href="ooOS.CPUSpeed.TOSCPUSpeed.html#TCycleCount">TCycleCount</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ooOS.CPUSpeed.TOSCPUSpeed.html#Frequency">Frequency</a></b>: Double;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ooOS.CPUSpeed.TOSCPUSpeed.html#New">New</a></b>: <a  href="ooOS.CPUSpeed.IOSCPUSpeed.html">IOSCPUSpeed</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Descripción</h2>
+<h3 class="detail">Internal Types</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="TCycleCount"></a><code><b>TCycleCount</b> = DWord ;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CPUClockCycleCount"></a><code>function <b>CPUClockCycleCount</b>: <a  href="ooOS.CPUSpeed.TOSCPUSpeed.html#TCycleCount">TCycleCount</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Call ASM to get CPU cycle count </p>
+<h6 class="description_section">Retorno</h6>
+<p class="return">DWord cycle count</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Frequency"></a><code>function <b>Frequency</b>: Double;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Call ASM to get CPU frequency </p>
+<h6 class="description_section">Retorno</h6>
+<p class="return">Double with the frequency</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="New"></a><code>class function <b>New</b>: <a  href="ooOS.CPUSpeed.IOSCPUSpeed.html">IOSCPUSpeed</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Create a new <code>TOSCPUSpeed</code> as interface</p>
+</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. Generated on 2017-12-06 16:13:41.</em>
+</span>
+</td></tr></table></body></html>
