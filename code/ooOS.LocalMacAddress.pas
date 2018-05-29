@@ -1,65 +1,120 @@
+{$REGION 'documentation'}
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
+{
+  Media Access Control (MAC) address information
+  @created(22/05/2018)
+  @author Vencejo Software <www.vencejosoft.com>
+}
+{$ENDREGION}
 unit ooOS.LocalMacAddress;
 
 interface
 
+{$IFDEF FPC}
+{$IFDEF UNIX}
+{$DEFINE USE_LINUX}
+{$ENDIF}
+{$ENDIF}
+
 uses
-  Windows, Winsock,
+{$IFDEF USE_LINUX}
+  ooOS.RemoteMacAddress,
+  ooOS.LocalIP,
+{$ELSE}
+  Windows,
+{$ENDIF}
   SysUtils,
   ooOS.Info.Intf;
 
 type
+{$REGION 'documentation'}
+{
+  @abstract(Implementation of @link(IOSInfo))
+  Media Access Control (MAC) address information
+  @member(Value @seealso(IOSInfo.Value))
+  @member(
+    MacAddress Call specific OS library to obtain MAC
+    @return(Text with mac address)
+  )
+  @member(
+    Create Object constructor
+  )
+  @member(
+    New Create a new @classname as interface
+  )
+}
+{$ENDREGION}
   TOSLocalMacAddress = class sealed(TInterfacedObject, IOSInfo)
+  strict private
+    _Value: String;
+  private
+    function MacAddress: String;
   public
     function Value: string;
+    constructor Create;
     class function New: IOSInfo;
   end;
 
 implementation
 
-function SendArp(DestIP, SrcIP: ULONG; pMacAddr: Pointer; PhyAddrLen: Pointer): DWord; StdCall;
-  external 'iphlpapi.dll' name 'SendARP';
-
 function TOSLocalMacAddress.Value: string;
+begin
+  Result := _Value;
+end;
+
+function TOSLocalMacAddress.MacAddress: String;
+{$IFDEF USE_LINUX}
+begin
+  Result := TOSRemoteMacAddress.New(TOSLocalIP.New.Value).Value;
+{$ELSE}
 type
+  TMACBlock = (Block1 = 1, Block2, Block3, Block4, Block5, Block6);
+
   TMacID = record
     A, B: word;
     D, M, S: word;
-    MAC: array [1 .. 6] of byte;
+    Blocks: array [TMACBlock] of Byte;
   end;
 var
   RPCRTHandle: THandle;
   MacID: TMacID;
-  I: ShortInt;
-  fnCreateUuid: function(var FuncGetMacID: TMacID): HResult; stdcall;
+  Block: TMACBlock;
+  fnLibraryMethod: function(var FuncGetMacID: TMacID): HResult; stdcall;
 
-  function GetProcName: {$IFDEF FPC}LPCSTR{$ELSE}LPCWSTR{$ENDIF};
+  function LibraryMethodName: {$IFDEF FPC}LPCSTR{$ELSE}LPCWSTR{$ENDIF};
   var
     OSVersionInfo: TOSVersionInfo;
   begin
     OSVersionInfo.dwOSVersionInfoSize := SizeOf(OSVersionInfo);
     GetVersionEx(OSVersionInfo);
-    result := 'UuidCreate';
     if (OSVersionInfo.dwMajorVersion >= 5) then
-      result := 'UuidCreateSequential';
+      Result := 'UuidCreateSequential'
+    else
+      Result := 'UuidCreate';
   end;
 
 begin
-  result := EmptyStr;
+  Result := EmptyStr;
   RPCRTHandle := LoadLibrary('RPCRT4.DLL');
-  @fnCreateUuid := GetProcAddress(RPCRTHandle, GetProcName);
-  fnCreateUuid(MacID);
-  for I := 1 to 6 do
-    result := result + IntToHex(MacID.MAC[I], 2);
+  @fnLibraryMethod := GetProcAddress(RPCRTHandle, LibraryMethodName);
+  fnLibraryMethod(MacID);
+  for Block := Low(TMACBlock) to High(TMACBlock) do
+    Result := Result + IntToHex(MacID.Blocks[Block], 2);
+{$ENDIF}
+end;
+
+constructor TOSLocalMacAddress.Create;
+begin
+  _Value := MacAddress;
 end;
 
 class function TOSLocalMacAddress.New: IOSInfo;
 begin
-  result := TOSLocalMacAddress.Create;
+  Result := TOSLocalMacAddress.Create;
 end;
 
 end.

@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -17,7 +17,7 @@ uses
 {$ENDIF};
 
 type
-  TOSCPUIDTest = class(TTestCase)
+  TOSCPUIDTest = class sealed(TTestCase)
   published
     procedure CPUIDIsNotEmpty;
     procedure HasCPUIDIsTrue;
@@ -30,10 +30,10 @@ var
   CPUID: TCPURegister;
 begin
   CPUID := TOSCPUID.New.ID;
-  CheckNotEquals(0, CPUID.EAX);
-  CheckNotEquals(0, CPUID.EBX);
-  CheckNotEquals(0, CPUID.ECX);
-  CheckNotEquals(0, CPUID.EDX);
+  CheckFalse(0 = CPUID.AX);
+  CheckFalse(0 = CPUID.BX);
+  CheckFalse(0 = CPUID.CX);
+  CheckFalse(0 = CPUID.DX);
 end;
 
 procedure TOSCPUIDTest.HasCPUIDIsTrue;

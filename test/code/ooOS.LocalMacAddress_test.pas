@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -17,14 +17,14 @@ uses
 {$ENDIF};
 
 type
-  TOSLocalMacAddressTest = class(TTestCase)
+  TOSLocalMacAddressTest = class sealed(TTestCase)
   published
-    procedure MacAddressIs;
+    procedure MacAddressIsText;
   end;
 
 implementation
 
-procedure TOSLocalMacAddressTest.MacAddressIs;
+procedure TOSLocalMacAddressTest.MacAddressIsText;
 begin
   CheckEquals(TOSLocalMacAddress.New.Value, TOSLocalMacAddress.New.Value);
 end;

@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -17,14 +17,14 @@ uses
 {$ENDIF};
 
 type
-  TOSComputerNameTest = class(TTestCase)
+  TOSComputerNameTest = class sealed(TTestCase)
   published
-    procedure ComputerNameIs;
+    procedure ComputerNameIsSomething;
   end;
 
 implementation
 
-procedure TOSComputerNameTest.ComputerNameIs;
+procedure TOSComputerNameTest.ComputerNameIsSomething;
 begin
   CheckEquals(TOSComputerName.New.Value, TOSComputerName.New.Value);
 end;

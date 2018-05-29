@@ -1,34 +1,35 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
 {
   Object to get CPU identifier
-  @created(08/04/2016)
+  @created(22/05/2018)
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
 unit ooOS.CPUID;
 
-interface
+{$IFDEF FPC}
+{$asmmode intel}
+{$endif}
 
-uses
-  Windows, SysUtils, Math;
+interface
 
 type
 {$REGION 'documentation'}
 // Type for each register of ID
 {$ENDREGION}
-  TCPUValue = {$IFDEF CPUX64}LongInt {$ELSE}Dword {$ENDIF};
+  TCPUValue = {$IFDEF CPUX64} UInt64{$ELSE} UInt32{$ENDIF};
 
 {$REGION 'documentation'}
 // Return struct for CPU ID
 {$ENDREGION}
 
   TCPURegister = record
-    EAX, EBX, ECX, EDX: TCPUValue;
+    AX, BX, CX, DX: TCPUValue;
   end;
 
 {$REGION 'documentation'}
@@ -65,7 +66,11 @@ type
   strict private
     _ID: TCPURegister;
   private
+{$IFDEF CPUX64}
+    function CPUID64: TCPURegister;
+{$ELSE}
     function CPUID: TCPURegister;
+{$ENDIF}
     function EmptyID: TCPURegister;
   public
     function HasCPUID: Boolean;
@@ -83,7 +88,7 @@ end;
 
 function TOSCPUID.HasCPUID: Boolean; assembler; register;
 asm
-  {$IFDEF WIN64}
+  {$IFDEF CPUX64}
   MOV EAX, True
   {$ELSE}
   PUSHFD                 // save EFLAGS to stack
@@ -101,47 +106,74 @@ asm
 @exit:
 end;
 
+{$IFDEF CPUX64}
+
+function TOSCPUID.CPUID64: TCPURegister; assembler; register;
+asm
+  PUSH  RBX
+  PUSH  RDI
+  MOV   RDI, result
+  // MOV   RAX, 1
+  XOR   RAX, RAX                    // Clear register
+  XOR   RBX, RBX
+  XOR   RCX, RCX
+  XOR   RDX, RDX
+  CPUID   // DW $A20F
+  {$IFDEF FPC}
+  MOV   [RDI + TCPURegister.AX], RAX
+  MOV   [RDI + TCPURegister.BX], RBX
+  MOV   [RDI + TCPURegister.CX], RCX
+  MOV   [RDI + TCPURegister.DX], RDX
+  {$ELSE}
+  MOV   [RDI].TCPURegister.&AX, RAX
+  MOV   [RDI].TCPURegister.&BX, RBX
+  MOV   [RDI].TCPURegister.&CX, RCX
+  MOV   [RDI].TCPURegister.&DX, RDX
+  {$ENDIF}
+  POP   RDI
+  POP   RBX
+end;
+{$ELSE}
+
 function TOSCPUID.CPUID: TCPURegister; assembler; register;
 asm
-  {$IFDEF WIN64}
-  push  rbx
-  push  rdi
-  mov   rdi, result
-  mov   eax, 1
-  cpuid
-  mov   [rdi].TCPURegister.&EAX, eax
-  mov   [rdi].TCPURegister.&EBX, ebx
-  mov   [rdi].TCPURegister.&ECX, ecx
-  mov   [rdi].TCPURegister.&EDX, edx
-  pop   rdi
-  pop   rbx
-  {$ELSE}
-  PUSH    EBX
-  PUSH    EDI
-  MOV     EDI, Result
-  MOV     EAX, 1
+  PUSH  EBX
+  PUSH  EDI
+  MOV   EDI, Result
+  // MOV   EAX, 1
+  XOR   EAX, EAX
+  XOR   EBX, EBX
+  XOR   ECX, ECX
+  XOR   EDX, EDX
   CPUID   // DW $A20F
-  MOV     [EDI].TCPURegister.&EAX, EAX
-  MOV     [EDI].TCPURegister.&EBX, EBX
-  MOV     [EDI].TCPURegister.&ECX, ECX
-  MOV     [EDI].TCPURegister.&EDX, EDX
-  POP     EDI
-  POP     EBX
+  {$IFDEF FPC}
+  MOV   [EDI + TCPURegister.AX], EAX
+  MOV   [EDI + TCPURegister.BX], EBX
+  MOV   [EDI + TCPURegister.CX], ECX
+  MOV   [EDI + TCPURegister.DX], EDX
+  {$ELSE}
+  MOV   [EDI].TCPURegister.&AX, EAX
+  MOV   [EDI].TCPURegister.&BX, EBX
+  MOV   [EDI].TCPURegister.&CX, ECX
+  MOV   [EDI].TCPURegister.&DX, EDX
   {$ENDIF}
+  POP   EDI
+  POP   EBX
 end;
+{$ENDIF}
 
 function TOSCPUID.EmptyID: TCPURegister;
 begin
-  Result.EAX := 0;
-  Result.EBX := 0;
-  Result.ECX := 0;
-  Result.EDX := 0;
+  Result.AX := 0;
+  Result.BX := 0;
+  Result.CX := 0;
+  Result.DX := 0;
 end;
 
 constructor TOSCPUID.Create;
 begin
   if HasCPUID then
-    _ID := CPUID
+    _ID := {$IFDEF CPUX64}CPUID64{$ELSE}CPUID{$ENDIF}
   else
     _ID := EmptyID;
 end;

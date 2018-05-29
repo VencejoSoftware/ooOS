@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -17,14 +17,14 @@ uses
 {$ENDIF};
 
 type
-  TOSLocalIPTest = class(TTestCase)
+  TOSLocalIPTest = class sealed(TTestCase)
   published
-    procedure LocalIPIs;
+    procedure LocalIPIsText;
   end;
 
 implementation
 
-procedure TOSLocalIPTest.LocalIPIs;
+procedure TOSLocalIPTest.LocalIPIsText;
 begin
   CheckEquals(TOSLocalIP.New.Value, TOSLocalIP.New.Value);
 end;

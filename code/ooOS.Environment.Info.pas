@@ -1,36 +1,100 @@
+{$REGION 'documentation'}
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
+{
+  Environment variable list information
+  @created(22/05/2018)
+  @author Vencejo Software <www.vencejosoft.com>
+}
+{$ENDREGION}
 unit ooOS.Environment.Info;
 
 interface
 
+{$IFDEF FPC}
+{$IFDEF UNIX}
+{$DEFINE USE_LINUX}
+{$ENDIF}
+{$ENDIF}
+
 uses
-  Windows, SysUtils,
+{$IFDEF USE_LINUX}
+  unix,
+{$ELSE}
+  Windows,
+{$ENDIF}
+  SysUtils,
   Generics.Collections;
 
 type
+{$REGION 'documentation'}
+{
+  @abstract(Object list to store environment variables)
+  @member(
+    LoadItemFromText Load list parsing a text
+    @param(Text Text to parse)
+  )
+}
+{$ENDREGION}
   TEnvironmentValueList = class sealed(TDictionary<string, string>)
   public
-    procedure AddFromText(const Text: String);
+    procedure LoadItemFromText(const Text: String);
   end;
+
+{$REGION 'documentation'}
+{
+  @abstract(Object to get environment variable list)
+  Obtain environment variable list information
+  @member(
+    Variables List of environment variables
+    @return(List object)
+  )
+  @member(
+    ValueByKey Get variable from his key
+    @param(Key Variable identifier)
+    @return(Variable text value)
+  )
+}
+{$ENDREGION}
 
   IOSEnvironmentInfo = interface
     ['{A4840FF5-82A2-46F7-8537-90438D696AF9}']
     function Variables: TEnvironmentValueList;
-    function VariableByKey(const Key: String): String;
+    function ValueByKey(const Key: String): String;
   end;
 
-  TWinEnvironmentInfo = class sealed(TInterfacedObject, IOSEnvironmentInfo)
+{$REGION 'documentation'}
+{
+  @abstract(Implementation of @link(IOSEnvironmentInfo))
+  @member(Variables @seealso(IOSEnvironmentInfo.Variables))
+  @member(ValueByKey @seealso(IOSEnvironmentInfo.ValueByKey))
+  @member(
+    FillList Using OS information fill list parsing text
+    @param(List List object of variables)
+  )
+  @member(
+    Create Object constructor
+  )
+  @member(
+    Destroy Object destructor
+  )
+  @member(
+    New Create a new @classname as interface
+  )
+}
+{$ENDREGION}
+
+  TOSEnvironmentInfo = class sealed(TInterfacedObject, IOSEnvironmentInfo)
   strict private
     _Variables: TEnvironmentValueList;
   private
-    procedure FillEnvironmentList(const List: TEnvironmentValueList);
+    procedure FillList(const List: TEnvironmentValueList);
   public
     function Variables: TEnvironmentValueList;
-    function VariableByKey(const Key: String): String;
+    function ValueByKey(const Key: String): String;
     constructor Create;
     destructor Destroy; override;
     class function New: IOSEnvironmentInfo;
@@ -40,7 +104,7 @@ implementation
 
 { TEnvironmentValueList }
 
-procedure TEnvironmentValueList.AddFromText(const Text: String);
+procedure TEnvironmentValueList.LoadItemFromText(const Text: String);
 var
   Key, Value: String;
   PosAsig: Integer;
@@ -50,20 +114,28 @@ begin
   begin
     Key := UpperCase(Copy(Text, 1, Pred(PosAsig)));
     Value := Copy(Text, Succ(PosAsig));
-    Add(Key, Value);
+    if not ContainsKey(Key) then
+      Add(Key, Value);
   end;
 end;
 
-{ TWinEnvironmentInfo }
+{ TOSEnvironmentInfo }
 
-function TWinEnvironmentInfo.Variables: TEnvironmentValueList;
+function TOSEnvironmentInfo.Variables: TEnvironmentValueList;
 begin
   if _Variables.Count < 1 then
-    FillEnvironmentList(_Variables);
+    FillList(_Variables);
   Result := _Variables;
 end;
 
-procedure TWinEnvironmentInfo.FillEnvironmentList(const List: TEnvironmentValueList);
+procedure TOSEnvironmentInfo.FillList(const List: TEnvironmentValueList);
+{$IFDEF USE_LINUX}
+var
+  Count: Integer;
+begin
+  for Count := 0 to GetEnvironmentVariableCount do
+    List.LoadItemFromText(GetEnvironmentString(Count));
+{$ELSE}
 var
   PEnvironmentStrs: PChar;
 begin
@@ -73,34 +145,35 @@ begin
     if Assigned(PEnvironmentStrs) then
       while PEnvironmentStrs^ <> #0 do
       begin
-        List.AddFromText(PEnvironmentStrs);
+        List.LoadItemFromText(PEnvironmentStrs);
         Inc(PEnvironmentStrs, Succ(Length(PEnvironmentStrs)));
       end;
   finally
     Windows.FreeEnvironmentStrings(PEnvironmentStrs);
   end;
+{$ENDIF}
 end;
 
-function TWinEnvironmentInfo.VariableByKey(const Key: String): String;
+function TOSEnvironmentInfo.ValueByKey(const Key: String): String;
 begin
   if not Variables.TryGetValue(UpperCase(Key), Result) then
     Result := EmptyStr;
 end;
 
-constructor TWinEnvironmentInfo.Create;
+constructor TOSEnvironmentInfo.Create;
 begin
   _Variables := TEnvironmentValueList.Create;
 end;
 
-destructor TWinEnvironmentInfo.Destroy;
+destructor TOSEnvironmentInfo.Destroy;
 begin
   _Variables.Free;
   inherited;
 end;
 
-class function TWinEnvironmentInfo.New: IOSEnvironmentInfo;
+class function TOSEnvironmentInfo.New: IOSEnvironmentInfo;
 begin
-  Result := TWinEnvironmentInfo.Create;
+  Result := TOSEnvironmentInfo.Create;
 end;
 
 end.

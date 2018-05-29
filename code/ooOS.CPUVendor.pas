@@ -1,21 +1,24 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
 {
   Object to get CPU vendor from system
-  @created(08/04/2016)
+  @created(22/05/2018)
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
 unit ooOS.CPUVendor;
 
+{$IFDEF FPC}
+{$asmmode intel}
+{$endif}
+
 interface
 
 uses
-  Windows, SysUtils,
   ooOS.Info.Intf,
   ooOS.CPUID;
 
@@ -43,9 +46,6 @@ type
 {$ENDREGION}
   TOSCPUVendor = class sealed(TInterfacedObject, IOSInfo)
   strict private
-  type
-    TVendorRegister = array [0 .. 2] of TCPUValue;
-  strict private
     _Value: String;
   private
     function CPUVendor: String;
@@ -64,40 +64,16 @@ begin
   Result := _Value;
 end;
 
-function TOSCPUVendor.VendorRegister: TCPURegister; assembler; register;
-asm
-  {$IFDEF WIN64}
-  push  rbx
-  push  rdi
-  mov   rdi, result
-  xor   rax, rax
-  cpuid
-  mov   [rdi].TCPURegister.&EAX, 0
-  mov   [rdi].TCPURegister.&EBX, ebx
-  mov   [rdi].TCPURegister.&ECX, ecx
-  mov   [rdi].TCPURegister.&EDX, edx
-  pop   rdi
-  pop   rbx
-  {$ELSE}
-  push  ebx
-  push  edi
-  mov   edi, Result
-  xor   eax, eax
-  cpuid   // DW $A20F
-  mov   edi.TCPURegister.&EAX, 0
-  mov   edi.TCPURegister.&EBX, ebx
-  mov   edi.TCPURegister.&ECX, ecx
-  mov   edi.TCPURegister.&EDX, edx
-  pop   edi
-  pop   ebx
-  {$ENDIF}
+function TOSCPUVendor.VendorRegister: TCPURegister;
+begin
+  Result := TOSCPUID.New.ID;
 end;
 
 function TOSCPUVendor.CPUValueToStr(const Value: TCPUValue): String;
 var
   i: 0 .. 3;
 begin
-  Result := EmptyStr;
+  Result := '';
   for i := 0 to 3 do
     Result := Result + Chr((Value and ($000000FF shl (i * 8))) shr (i * 8));
 end;
@@ -107,7 +83,7 @@ var
   CPURegister: TCPURegister;
 begin
   CPURegister := VendorRegister;
-  Result := CPUValueToStr(CPURegister.ebx) + CPUValueToStr(CPURegister.edx) + CPUValueToStr(CPURegister.ecx);
+  Result := CPUValueToStr(CPURegister.BX) + CPUValueToStr(CPURegister.DX) + CPUValueToStr(CPURegister.CX);
 end;
 
 constructor TOSCPUVendor.Create;

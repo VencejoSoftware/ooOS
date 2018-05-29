@@ -1,12 +1,12 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
 {
-  Object to get drive serial from system
-  @created(08/04/2016)
+  Obtains the drive serial number from operating system
+  @created(22/05/2018)
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
@@ -14,34 +14,32 @@ unit ooOS.DriveSerial;
 
 interface
 
+{$IFDEF FPC}
+{$IFDEF UNIX}
+{$DEFINE USE_LINUX}
+{$ENDIF}
+{$ENDIF}
+
 uses
+  Classes,
+{$IFDEF USE_LINUX}
+  regexpr, LazFileUtils, FileUtil,
+{$ELSE}
   Windows,
+{$ENDIF}
+  SysUtils,
   ooOS.Info.Intf;
 
 type
 {$REGION 'documentation'}
 {
-  @abstract(Object to get drive serial from system)
-  Object to get drive serial from system
-  @member(
-    Serial Return the drive serial number as hexadecimal
-    @return(String with the serial number formatted)
-  )
-}
-{$ENDREGION}
-  IOSDriveSerial = interface
-    ['{A6E8779F-0E72-4F68-A204-FCC05052B9F8}']
-    function Serial: DWord;
-  end;
-
-{$REGION 'documentation'}
-{
-  @abstract(Implementation of @link(IOSDriveSerial))
+  @abstract(Implementation of @link(IOSInfo))
+  Obtains the drive serial number from operating system
+  @member(Value @seealso(IOSInfo.Value))
   @member(
     HDDSerial Call OS to get drive serial
     @return(Integer with the serial if success, 0 if fail)
   )
-  @member(Serial @seealso(IOSDriveSerial.Serial))
   @member(
     Create Object constructor
     @param(Drive Drive letter to access)
@@ -52,44 +50,79 @@ type
   )
 }
 {$ENDREGION}
-
-  TOSDriveSerial = class sealed(TInterfacedObject, IOSDriveSerial)
+  TOSDriveSerial = class sealed(TInterfacedObject, IOSInfo)
   strict private
-    _Serial: DWord;
+    _Value: String;
   private
-    function HDDSerial(const Drive: Char): DWord;
+    function HDDSerial(const Drive: String): String;
   public
-    function Serial: DWord;
-    constructor Create(const Drive: Char);
-    class function New(const Drive: Char): IOSDriveSerial;
+    function Value: String;
+    constructor Create(const Drive: String);
+    class function New(const Drive: String): IOSInfo;
   end;
 
 implementation
 
-function TOSDriveSerial.Serial: DWord;
+function TOSDriveSerial.Value: String;
 begin
-  Result := _Serial;
+  Result := _Value;
 end;
 
-function TOSDriveSerial.HDDSerial(const Drive: Char): DWord;
+function TOSDriveSerial.HDDSerial(const Drive: string): string;
+{$IFDEF USE_LINUX}
+var
+  DriveList: TStringList;
+  RegexObj: TRegExpr;
+  symlnk, RegexpInput: string;
+  i: integer;
+begin
+  DriveList := TStringList.Create;
+  try
+    DriveList := FindAllFiles('/dev/disk/by-id');
+    RegexpInput := EmptyStr;
+    for i := 0 to Pred(DriveList.Count) do
+    begin
+      symlnk := ReadAllLinks(DriveList[i], False);
+      if (symlnk = Drive) then
+        RegexpInput := RegexpInput + DriveList[i] + LineEnding;
+    end;
+    RegexObj := TRegExpr.Create;
+    try
+      RegexObj.Expression := 'ata.*_([^ ]*)\n';
+      if RegexObj.Exec(RegexpInput) then
+        Result := RegexObj.Match[1]
+      else
+        Result := EmptyStr;
+    finally
+      RegexObj.Free;
+    end;
+  finally
+    DriveList.Free;
+  end;
+{$ELSE}
+
 var
   lHDTemp: PDWORD;
   lMC, lFL: DWord;
 begin
   System.New(lHDTemp);
-  if GetVolumeInformation(PChar(Drive + ':\'), nil, 0, lHDTemp, lMC, lFL, nil, 0) then
-    Result := lHDTemp^
-  else
-    Result := 0;
-  Dispose(lHDTemp);
+  try
+    if GetVolumeInformation(PChar(Drive + ':\'), nil, 0, lHDTemp, lMC, lFL, nil, 0) then
+      Result := IntToHex(lHDTemp^, 10)
+    else
+      Result := EmptyStr;
+  finally
+    Dispose(lHDTemp);
+  end;
+{$ENDIF}
 end;
 
-constructor TOSDriveSerial.Create(const Drive: Char);
+constructor TOSDriveSerial.Create(const Drive: String);
 begin
-  _Serial := HDDSerial(Drive);
+  _Value := HDDSerial(Drive);
 end;
 
-class function TOSDriveSerial.New(const Drive: Char): IOSDriveSerial;
+class function TOSDriveSerial.New(const Drive: String): IOSInfo;
 begin
   Result := TOSDriveSerial.Create(Drive);
 end;

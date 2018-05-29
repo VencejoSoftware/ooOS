@@ -27,7 +27,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;..\..\..\ooBatch\code;..\..\code;..\code"/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooBatch\code;..\..\code;..\code"/>
             <UnitOutputDirectory Value="..\build\debug"/>
           </SearchPaths>
           <Parsing>
@@ -66,7 +66,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;..\..\..\ooBatch\code;..\..\code;..\code"/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooBatch\code;..\..\code;..\code"/>
             <UnitOutputDirectory Value="..\build\release"/>
           </SearchPaths>
           <Parsing>
@@ -116,7 +116,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="22">
       <Unit0>
         <Filename Value="test.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -141,6 +141,70 @@
         <Filename Value="..\code\ooOS.UserName_test.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="..\code\ooOS.CPUID_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\code\ooOS.CPUSpeed_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\code\ooOS.CPUVendor_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\code\ooOS.DriveSerial_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\code\ooOS.Environment.Info_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\code\ooOS.ComputerName.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\code\ooOS.CPUID.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\code\ooOS.CPUSpeed.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\code\ooOS.CPUVendor.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\..\code\ooOS.DriveSerial.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\code\ooOS.Environment.Info.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\..\code\ooOS.Info.Intf.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\code\ooOS.LocalIP.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\..\code\ooOS.LocalMacAddress.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\code\ooOS.RemoteMacAddress.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\code\ooOS.UserName.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit21>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -148,7 +212,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;..\..\..\ooBatch\code;..\..\code;..\code"/>
+      <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooBatch\code;..\..\code;..\code"/>
       <UnitOutputDirectory Value="..\build\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -33,24 +33,27 @@ var
 
 implementation
 
+{$IFDEF FPC}
+{$R *.lfm}
+{$ELSE}
 {$R *.dfm}
+{$ENDIF}
 
 procedure TMainForm.Button1Click(Sender: TObject);
 var
   CPUID: IOSCPUID;
   CPUSpeed: IOSCPUSpeed;
   CPUVendor: IOSInfo;
-  DriveSerial: IOSDriveSerial;
+  DriveSerial: IOSInfo;
 begin
   CPUID := TOSCPUID.New;
-  Memo1.Lines.Append(Format('CPUID: %s.%s.%s.%s', [IntToStr(CPUID.ID.EAX), IntToStr(CPUID.ID.EBX),
-    IntToStr(CPUID.ID.ECX), IntToStr(CPUID.ID.EDX)]));
+  Memo1.Lines.Append(Format('CPUID: %d.%d.%d.%d', [CPUID.ID.AX, CPUID.ID.BX, CPUID.ID.CX, CPUID.ID.DX]));
   CPUVendor := TOSCPUVendor.New;
   Memo1.Lines.Append(Format('CPUVendor: %s', [CPUVendor.Value]));
   CPUSpeed := TOSCPUSpeed.New;
   Memo1.Lines.Append(Format('CPUSPEED: %f', [CPUSpeed.Frequency]));
   DriveSerial := TOSDriveSerial.New('C');
-  Memo1.Lines.Append(Format('C-SERIAL: %s', [IntToStr(DriveSerial.Serial)]));
+  Memo1.Lines.Append(Format('C-SERIAL: %s', [DriveSerial.Value]));
 end;
 
 end.

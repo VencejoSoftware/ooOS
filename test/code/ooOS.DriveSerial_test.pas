@@ -1,11 +1,17 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
 unit ooOS.DriveSerial_test;
 
 interface
+
+{$IFDEF FPC}
+{$IFDEF UNIX}
+{$DEFINE USE_LINUX}
+{$ENDIF}
+{$ENDIF}
 
 uses
   SysUtils,
@@ -20,19 +26,23 @@ type
   TOSDriveSerialTest = class sealed(TTestCase)
   published
     procedure ValueIsNotEmpty;
-    procedure InvalidDriveMustBeZero;
+    procedure InvalidDriveMustBeEmpty;
   end;
 
 implementation
 
-procedure TOSDriveSerialTest.InvalidDriveMustBeZero;
+procedure TOSDriveSerialTest.InvalidDriveMustBeEmpty;
 begin
-  CheckEquals(0, TOSDriveSerial.New('Ñ').Serial);
+  CheckEquals('', TOSDriveSerial.New('Ñ').Value);
 end;
 
 procedure TOSDriveSerialTest.ValueIsNotEmpty;
 begin
-  CheckTrue(TOSDriveSerial.New('C').Serial <> 0);
+{$IFDEF USE_LINUX}
+  CheckTrue(TOSDriveSerial.New('/dev/sda').Value <> '');
+{$ELSE}
+  CheckTrue(TOSDriveSerial.New('C').Value <> '');
+{$ENDIF}
 end;
 
 initialization

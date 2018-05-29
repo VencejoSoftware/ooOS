@@ -1,21 +1,33 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
 {
   Object to get CPU speed
-  @created(08/04/2016)
+  @created(22/05/2018)
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
 unit ooOS.CPUSpeed;
 
+{$IFDEF FPC}
+{$IFDEF UNIX}
+{$DEFINE USE_LINUX}
+{$ENDIF}
+{$asmmode intel}
+{$endif}
+
 interface
 
 uses
-  Windows;
+{$IFDEF USE_LINUX}
+  baseunix,
+{$ELSE}
+  Windows,
+{$ENDIF}
+  SysUtils;
 
 type
 {$REGION 'documentation'}
@@ -30,7 +42,7 @@ type
 {$ENDREGION}
   IOSCPUSpeed = interface
     ['{95E14E01-382A-4E16-A867-14E3E287BDE8}']
-    function Frequency: Double;
+    function Frequency: Extended;
   end;
 
 {$REGION 'documentation'}
@@ -55,7 +67,7 @@ type
   private
     function CPUClockCycleCount: TCycleCount;
   public
-    function Frequency: Double;
+    function Frequency: Extended;
     class function New: IOSCPUSpeed;
   end;
 
@@ -63,40 +75,55 @@ implementation
 
 function TOSCPUSpeed.CPUClockCycleCount: TCycleCount; assembler; register;
 asm
-  {$IFDEF CPUX64}
   rdtsc  // dw 310Fh
+  {$IFDEF CPUX64}
   shl rdx, 32
   or rax, rdx
   {$ELSE}
-  rdtsc  // dw 310Fh
   mov Result, eax
   {$ENDIF}
 end;
 
-function TOSCPUSpeed.Frequency: Double;
+function TOSCPUSpeed.Frequency: Extended;
 const
   DelayTime = 500; // measure time in ms
 var
   TimerLo, TimerLo2: TCycleCount;
   PriorityClass, Priority: Integer;
 begin
+{$IFDEF USE_LINUX}
+  Priority := fpGetPriority(PRIO_PROCESS, FpGetpid);
+{$ELSE}
   PriorityClass := GetPriorityClass(GetCurrentProcess);
   Priority := GetthreadPriority(GetCurrentthread);
+{$ENDIF}
   try
+{$IFDEF USE_LINUX}
+    fpSetPriority(PRIO_PROCESS, FpGetpid, 20);
+{$ELSE}
     SetPriorityClass(GetCurrentProcess, REALTIME_PRIORITY_CLASS);
     SetthreadPriority(GetCurrentthread, THREAD_PRIORITY_TIME_CRITICAL);
+{$ENDIF}
     Sleep(10);
     TimerLo := CPUClockCycleCount;
     Sleep(DelayTime);
     TimerLo2 := CPUClockCycleCount;
     try
-      Result := (TimerLo2 - TimerLo) / (1000 * DelayTime);
+      if TimerLo2 > TimerLo then
+        Result := (TimerLo2 - TimerLo)
+      else
+        Result := (TimerLo - TimerLo2);
+      Result := Result / (1000 * DelayTime);
     except
       Result := 0;
     end;
   finally
+{$IFDEF USE_LINUX}
+    fpSetPriority(PRIO_PROCESS, FpGetpid, Priority);
+{$ELSE}
     SetthreadPriority(GetCurrentthread, Priority);
     SetPriorityClass(GetCurrentProcess, PriorityClass);
+{$ENDIF}
   end;
 end;
 
