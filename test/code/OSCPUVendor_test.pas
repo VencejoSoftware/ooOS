@@ -3,13 +3,13 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.CPUVendor_test;
+unit OSCPUVendor_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.CPUVendor,
+  OSCPUVendor,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}

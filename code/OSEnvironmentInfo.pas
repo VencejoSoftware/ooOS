@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.Environment.Info;
+unit OSEnvironmentInfo;
 
 interface
 

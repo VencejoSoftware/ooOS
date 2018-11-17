@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.Info.Intf;
+unit OSInfo;
 
 interface
 

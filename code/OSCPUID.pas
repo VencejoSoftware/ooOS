@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.CPUID;
+unit OSCPUID;
 
 {$IFDEF FPC}
 {$asmmode intel}
@@ -89,7 +89,18 @@ end;
 function TOSCPUID.HasCPUID: Boolean; assembler; register;
 asm
   {$IFDEF CPUX64}
-  MOV EAX, True
+  // MOV EAX, True
+  PUSHFQ
+  POP     RAX
+  MOV     RDX,RAX
+  XOR     RAX,$200000// ID_BIT
+  PUSH    RAX
+  POPFQ
+  PUSHFQ
+  POP     RAX
+  XOR     RAX,RDX
+  JZ      @exit
+  MOV     AL,True
   {$ELSE}
   PUSHFD                 // save EFLAGS to stack
   POP     EAX            // store EFLAGS in EAX

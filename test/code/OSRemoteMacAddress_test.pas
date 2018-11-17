@@ -3,14 +3,14 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.RemoteMacAddress_test;
+unit OSRemoteMacAddress_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.LocalIP,
-  ooOS.LocalMacAddress, ooOS.RemoteMacAddress,
+  OSLocalIP,
+  OSLocalMacAddress, OSRemoteMacAddress,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}

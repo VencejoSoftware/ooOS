@@ -94,27 +94,27 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\code\ooOS.ComputerName_test.pas"/>
-        <DCCReference Include="..\code\ooOS.LocalIP_test.pas"/>
-        <DCCReference Include="..\code\ooOS.LocalMacAddress_test.pas"/>
-        <DCCReference Include="..\code\ooOS.RemoteMacAddress_test.pas"/>
-        <DCCReference Include="..\code\ooOS.UserName_test.pas"/>
-        <DCCReference Include="..\code\ooOS.CPUSpeed_test.pas"/>
-        <DCCReference Include="..\code\ooOS.CPUID_test.pas"/>
-        <DCCReference Include="..\code\ooOS.CPUVendor_test.pas"/>
-        <DCCReference Include="..\code\ooOS.DriveSerial_test.pas"/>
-        <DCCReference Include="..\..\code\ooOS.ComputerName.pas"/>
-        <DCCReference Include="..\..\code\ooOS.CPUID.pas"/>
-        <DCCReference Include="..\..\code\ooOS.CPUSpeed.pas"/>
-        <DCCReference Include="..\..\code\ooOS.CPUVendor.pas"/>
-        <DCCReference Include="..\..\code\ooOS.DriveSerial.pas"/>
-        <DCCReference Include="..\..\code\ooOS.Environment.Info.pas"/>
-        <DCCReference Include="..\..\code\ooOS.Info.Intf.pas"/>
-        <DCCReference Include="..\..\code\ooOS.LocalIP.pas"/>
-        <DCCReference Include="..\..\code\ooOS.LocalMacAddress.pas"/>
-        <DCCReference Include="..\..\code\ooOS.RemoteMacAddress.pas"/>
-        <DCCReference Include="..\..\code\ooOS.UserName.pas"/>
-        <DCCReference Include="..\code\ooOS.Environment.Info_test.pas"/>
+        <DCCReference Include="..\code\OSComputerName_test.pas"/>
+        <DCCReference Include="..\code\OSLocalIP_test.pas"/>
+        <DCCReference Include="..\code\OSLocalMacAddress_test.pas"/>
+        <DCCReference Include="..\code\OSRemoteMacAddress_test.pas"/>
+        <DCCReference Include="..\code\OSUserName_test.pas"/>
+        <DCCReference Include="..\code\OSCPUSpeed_test.pas"/>
+        <DCCReference Include="..\code\OSCPUID_test.pas"/>
+        <DCCReference Include="..\code\OSCPUVendor_test.pas"/>
+        <DCCReference Include="..\code\OSDriveSerial_test.pas"/>
+        <DCCReference Include="..\..\code\OSComputerName.pas"/>
+        <DCCReference Include="..\..\code\OSCPUID.pas"/>
+        <DCCReference Include="..\..\code\OSCPUSpeed.pas"/>
+        <DCCReference Include="..\..\code\OSCPUVendor.pas"/>
+        <DCCReference Include="..\..\code\OSDriveSerial.pas"/>
+        <DCCReference Include="..\..\code\OSEnvironmentInfo.pas"/>
+        <DCCReference Include="..\..\code\OSInfo.pas"/>
+        <DCCReference Include="..\..\code\OSLocalIP.pas"/>
+        <DCCReference Include="..\..\code\OSLocalMacAddress.pas"/>
+        <DCCReference Include="..\..\code\OSRemoteMacAddress.pas"/>
+        <DCCReference Include="..\..\code\OSUserName.pas"/>
+        <DCCReference Include="..\code\OSEnvironment.Info_test.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

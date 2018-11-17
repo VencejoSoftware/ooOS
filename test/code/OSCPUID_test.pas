@@ -3,13 +3,13 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.CPUID_test;
+unit OSCPUID_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.CPUID,
+  OSCPUID,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}
