@@ -5,14 +5,12 @@
   The full license is distributed with this software
 }
 {
-  Computer name information
+  User name information
   @created(22/05/2018)
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.ComputerName;
-
-interface
+unit OSUserName;
 
 {$IFDEF FPC}
 {$IFDEF UNIX}
@@ -20,24 +18,24 @@ interface
 {$ENDIF}
 {$ENDIF}
 
+interface
+
 uses
-{$IFDEF USE_LINUX}
-  unix,
-{$ELSE}
+{$IFNDEF USE_LINUX}
   Windows,
 {$ENDIF}
   SysUtils,
-  ooOS.Info.Intf;
+  OSInfo;
 
 type
 {$REGION 'documentation'}
 {
   @abstract(Implementation of @link(IOSInfo))
-  Obtain computer name
+  Obtain current user name
   @member(Value @seealso(IOSInfo.Value))
   @member(
-    ComputerName Call OS to obtain computer name
-    @return(Text with computer name)
+    UserName Call OS to obtain user name
+    @return(Text with user name)
   )
   @member(
     Create Object constructor
@@ -47,11 +45,11 @@ type
   )
 }
 {$ENDREGION}
-  TOSComputerName = class sealed(TInterfacedObject, IOSInfo)
+  TOSUserName = class sealed(TInterfacedObject, IOSInfo)
   strict private
     _Value: String;
   private
-    function ComputerName: string;
+    function UserName: string;
   public
     function Value: string;
     constructor Create;
@@ -60,35 +58,35 @@ type
 
 implementation
 
-function TOSComputerName.Value: string;
+function TOSUserName.Value: string;
 begin
   Result := _Value;
 end;
 
-function TOSComputerName.ComputerName: string;
+function TOSUserName.UserName: string;
 {$IFDEF USE_LINUX}
 begin
-  Result := GetHostName;
+  Result := GetEnvironmentVariable('USER');
 {$ELSE}
 var
   Len: Cardinal;
 begin
-  Len := Succ(MAX_COMPUTERNAME_LENGTH);
+  Len := 256;
   Result := StringOfChar(#0, Len);
-  Windows.GetComputerName(PChar(Result), Len);
+  Windows.GetUserName(PChar(Result), Len);
   SetLength(Result, Len);
   Result := Trim(Result);
 {$ENDIF}
 end;
 
-constructor TOSComputerName.Create;
+constructor TOSUserName.Create;
 begin
-  _Value := ComputerName;
+  _Value := UserName;
 end;
 
-class function TOSComputerName.New: IOSInfo;
+class function TOSUserName.New: IOSInfo;
 begin
-  Result := TOSComputerName.Create;
+  Result := TOSUserName.Create;
 end;
 
 end.

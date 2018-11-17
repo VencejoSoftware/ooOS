@@ -3,13 +3,13 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.ComputerName_test;
+unit OSComputerName_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.ComputerName,
+  OSComputerName,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}

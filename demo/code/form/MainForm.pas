@@ -10,16 +10,16 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls,
-  ooOS.ComputerName,
-  ooOS.CPUID,
-  ooOS.CPUSpeed,
-  ooOS.CPUVendor,
-  ooOS.DriveSerial,
-  ooOS.Info.Intf,
-  ooOS.LocalIP,
-  ooOS.LocalMacAddress,
-  ooOS.RemoteMacAddress,
-  ooOS.UserName;
+  OSComputerName,
+  OSCPUID,
+  OSCPUSpeed,
+  OSCPUVendor,
+  OSDriveSerial,
+  OSInfo,
+  OSLocalIP,
+  OSLocalMacAddress,
+  OSRemoteMacAddress,
+  OSUserName;
 
 type
   TMainForm = class(TForm)

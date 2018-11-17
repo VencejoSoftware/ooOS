@@ -3,7 +3,7 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.DriveSerial_test;
+unit OSDriveSerial_test;
 
 interface
 
@@ -15,7 +15,7 @@ interface
 
 uses
   SysUtils,
-  ooOS.DriveSerial,
+  OSDriveSerial,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}

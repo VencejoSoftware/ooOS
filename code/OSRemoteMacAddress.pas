@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.RemoteMacAddress;
+unit OSRemoteMacAddress;
 
 interface
 
@@ -27,10 +27,11 @@ uses
 {$ENDIF}
 {$ENDIF}
 {$IFNDEF USE_LINUX}
-  Windows, Sockets, Winsock,
+  Windows, Winsock,
+//  Sockets,
 {$ENDIF}
   SysUtils,
-  ooOS.Info.Intf;
+  OSInfo;
 
 type
 {$REGION 'documentation'}

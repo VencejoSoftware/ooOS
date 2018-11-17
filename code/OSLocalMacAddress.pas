@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.LocalMacAddress;
+unit OSLocalMacAddress;
 
 interface
 
@@ -28,7 +28,7 @@ uses
   Windows,
 {$ENDIF}
   SysUtils,
-  ooOS.Info.Intf;
+  OSInfo;
 
 type
 {$REGION 'documentation'}

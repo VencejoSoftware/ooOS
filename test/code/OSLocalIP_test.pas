@@ -3,13 +3,13 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.LocalIP_test;
+unit OSLocalIP_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.LocalIP,
+  OSLocalIP,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}

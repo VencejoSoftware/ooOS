@@ -3,13 +3,13 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.CPUSpeed_test;
+unit OSLocalMacAddress_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.CPUSpeed,
+  OSLocalMacAddress,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}
@@ -17,23 +17,20 @@ uses
 {$ENDIF};
 
 type
-  TOSCPUSpeedTest = class sealed(TTestCase)
+  TOSLocalMacAddressTest = class sealed(TTestCase)
   published
-    procedure ValueIsNotZero;
+    procedure MacAddressIsText;
   end;
 
 implementation
 
-procedure TOSCPUSpeedTest.ValueIsNotZero;
-var
-  CPUSpeed: Double;
+procedure TOSLocalMacAddressTest.MacAddressIsText;
 begin
-  CPUSpeed := TOSCPUSpeed.New.Frequency;
-  CheckNotEquals(0, CPUSpeed);
+  CheckEquals(TOSLocalMacAddress.New.Value, TOSLocalMacAddress.New.Value);
 end;
 
 initialization
 
-RegisterTest(TOSCPUSpeedTest {$IFNDEF FPC}.Suite {$ENDIF});
+RegisterTest(TOSLocalMacAddressTest {$IFNDEF FPC}.Suite {$ENDIF});
 
 end.

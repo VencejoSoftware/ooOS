@@ -3,13 +3,13 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.UserName_test;
+unit OSCPUSpeed_test;
 
 interface
 
 uses
   SysUtils,
-  ooOS.UserName,
+  OSCPUSpeed,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}
@@ -17,20 +17,23 @@ uses
 {$ENDIF};
 
 type
-  TOSUserNameTest = class sealed(TTestCase)
+  TOSCPUSpeedTest = class sealed(TTestCase)
   published
-    procedure UserNameIsSomething;
+    procedure ValueIsNotZero;
   end;
 
 implementation
 
-procedure TOSUserNameTest.UserNameIsSomething;
+procedure TOSCPUSpeedTest.ValueIsNotZero;
+var
+  CPUSpeed: Double;
 begin
-  CheckEquals(TOSUserName.New.Value, TOSUserName.New.Value);
+  CPUSpeed := TOSCPUSpeed.New.Frequency;
+  CheckNotEquals(0, CPUSpeed);
 end;
 
 initialization
 
-RegisterTest(TOSUserNameTest {$IFNDEF FPC}.Suite {$ENDIF});
+RegisterTest(TOSCPUSpeedTest {$IFNDEF FPC}.Suite {$ENDIF});
 
 end.

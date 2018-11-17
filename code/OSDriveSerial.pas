@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.DriveSerial;
+unit OSDriveSerial;
 
 interface
 
@@ -28,7 +28,7 @@ uses
   Windows,
 {$ENDIF}
   SysUtils,
-  ooOS.Info.Intf;
+  OSInfo;
 
 type
 {$REGION 'documentation'}
@@ -102,18 +102,12 @@ begin
 {$ELSE}
 
 var
-  lHDTemp: PDWORD;
-  lMC, lFL: DWord;
+  MC, FL, SN: DWORD;
 begin
-  System.New(lHDTemp);
-  try
-    if GetVolumeInformation(PChar(Drive + ':\'), nil, 0, lHDTemp, lMC, lFL, nil, 0) then
-      Result := IntToHex(lHDTemp^, 10)
-    else
-      Result := EmptyStr;
-  finally
-    Dispose(lHDTemp);
-  end;
+  if GetVolumeInformation(PChar(Drive + ':\'), nil, SizeOf(Drive), @SN, MC, FL, nil, 0) then
+    Result := IntToHex(SN, 10)
+  else
+    Result := EmptyStr;
 {$ENDIF}
 end;
 

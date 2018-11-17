@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.LocalIP;
+unit OSLocalIP;
 
 {$IFDEF FPC}
 {$IFDEF UNIX}
@@ -27,7 +27,7 @@ uses
   Windows, Winsock,
 {$ENDIF}
   SysUtils,
-  ooOS.Info.Intf;
+  OSInfo;
 
 type
 {$REGION 'documentation'}

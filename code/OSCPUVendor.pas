@@ -10,7 +10,7 @@
   @author Vencejo Software <www.vencejosoft.com>
 }
 {$ENDREGION}
-unit ooOS.CPUVendor;
+unit OSCPUVendor;
 
 {$IFDEF FPC}
 {$asmmode intel}
@@ -19,8 +19,8 @@ unit ooOS.CPUVendor;
 interface
 
 uses
-  ooOS.Info.Intf,
-  ooOS.CPUID;
+  OSInfo,
+  OSCPUID;
 
 type
 {$REGION 'documentation'}

@@ -3,7 +3,7 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit ooOS.Environment.Info_test;
+unit OSEnvironment.Info_test;
 
 interface
 
@@ -15,7 +15,7 @@ interface
 
 uses
   SysUtils,
-  ooOS.Environment.Info,
+  OSEnvironmentInfo,
 {$IFDEF FPC}
   fpcunit, testregistry
 {$ELSE}
