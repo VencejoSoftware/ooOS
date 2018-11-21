@@ -22,8 +22,8 @@ interface
 
 uses
 {$IFDEF USE_LINUX}
-  ooOS.RemoteMacAddress,
-  ooOS.LocalIP,
+  OSRemoteMacAddress,
+  OSLocalIP,
 {$ELSE}
   Windows,
 {$ENDIF}
